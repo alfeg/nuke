@@ -112,6 +112,14 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        param(
+            "teamcity.runner.commandline.stdstreams.encoding",
+            "UTF-8"
+        )
+        param(
+            "teamcity.internal.commandLineRunner.defaultShebang",
+            "#!/bin/bash"
+        )
     }
 }
 object Compile : BuildType({
@@ -122,7 +130,7 @@ object Compile : BuildType({
     }
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Restore Compile --skip"
         }
     }
@@ -142,7 +150,7 @@ object Pack : BuildType({
     artifactRules = "output/packages/*.nupkg => output/packages"
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Pack --skip"
         }
     }
@@ -186,7 +194,7 @@ object Test_P1T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Test --skip --test-partition 1"
         }
     }
@@ -209,7 +217,7 @@ object Test_P2T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Test --skip --test-partition 2"
         }
     }
@@ -276,7 +284,7 @@ object Coverage : BuildType({
     artifactRules = "output/coverage-report.zip => output"
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Coverage --skip"
         }
     }
@@ -313,7 +321,7 @@ object Publish : BuildType({
     }
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "Publish --skip"
         }
     }
@@ -345,7 +353,7 @@ object Announce : BuildType({
     }
     steps {
         exec {
-            path = "build.sh"
+            path = "build.cmd"
             arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
         }
     }
